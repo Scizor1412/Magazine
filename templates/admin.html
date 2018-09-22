@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Admin</title>
+</head>
+<body>
+    <h1>Admin</h1>
+    <h2>User List</h2>
+    <table>
+        <thead>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Yob</th>
+            <th>email</th>
+            <th></th>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ loop.index }}</td>
+                <td>{{ user.fullname }}</td>
+                <td>{{ user.yob }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    <a href="{{ url_for('edit_user') }}">Thay đổi</a>
+                    <a href="{{ url_for('delete_user') }}">Xóa</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
