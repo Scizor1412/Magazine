@@ -6,6 +6,8 @@ app = Flask(__name__)
 
 mlab.connect()
 
+app.secret_key = "secret key"
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -29,6 +31,19 @@ def signup():
 def admin():
     users = User.objects()
     return render_template('admin.html', users = users)
+
+@app.route('/login', methods = ["GET", "POST"])
+def login():
+    if request.method == "GET":
+        return render_template('login.html')
+    elif request.method == "POST":
+        form = request.form
+        email = form['email']
+        password = form['password']
+    found_user = User.objects.get(email = email, password = password)
+    if found_user is not None:
+        session['loggedin'] = True
+        return redirect(url_for('admin'))
 
 if __name__ == '__main__':
   app.run(debug=True)
