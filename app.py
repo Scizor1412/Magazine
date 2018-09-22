@@ -29,8 +29,24 @@ def signup():
 
 @app.route('/admin')
 def admin():
+    if 'loggedin' in Session:
+        if 'loggedin' == True:
+            return render_template('admin.html')
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
+
+
+@app.route('/admin/user')
+def admin_user():
     users = User.objects()
-    return render_template('admin.html', users = users)
+    return render_template('admin_user.html', users = users)
+
+@app.route('/admin/article')
+def admin_article():
+    articles = Article.objects()
+    return render_template('admin_article.html', articles = articles)
 
 @app.route('/login', methods = ["GET", "POST"])
 def login():
