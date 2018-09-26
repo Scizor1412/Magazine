@@ -1,0 +1,36 @@
+.bg-product{
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.3), 
+        rgba(0, 0, 0, 0.3)),
+        url(/static/image/product.jpg);
+    background-size: cover;
+}
+
+.bg-product2{
+    background: linear-gradient(
+        rgba(0, 0, 0, 0.3), 
+        rgba(0, 0, 0, 0.3)),
+        url(/static/image/product2.jpg);
+    background-size: cover;
+}
+
+.h-750px{
+    height: 750px;
+}
+
+.font-noto{
+    font-family: 'Noto Serif KR', sans-serif;
+}
+
+.product-border{
+    border-style: solid;
+    border-top-width: 8px;
+    border-image-source: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
+    border-image-slice: 1;
+    border-image-width: 1;
+    border-image-outset: 0;
+    border-image-repeat: stretch;
+    border-bottom-width: 8px;
+    border-left-width: 4px;
+    border-right-width: 4px;
+}

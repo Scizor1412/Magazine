@@ -59,5 +59,10 @@ def login():
         if found_user is not None:
             session['loggedin'] = True
             return redirect(url_for('admin'))
+
+@app.route('/homepage')
+def homepage():
+    return render_template("homepage.html")
+
 if __name__ == '__main__':
   app.run(debug=True)
