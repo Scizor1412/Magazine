@@ -29,14 +29,13 @@ def signup():
 
 @app.route('/admin')
 def admin():
-    if 'loggedin' in Session:
-        if 'loggedin' == True:
+    if 'loggedin' in session:
+        if session['loggedin'] == True:
             return render_template('admin.html')
         else:
             return redirect(url_for('login'))
     else:
         return redirect(url_for('login'))
-
 
 @app.route('/admin/user')
 def admin_user():
@@ -56,10 +55,9 @@ def login():
         form = request.form
         email = form['email']
         password = form['password']
-    found_user = User.objects.get(email = email, password = password)
-    if found_user is not None:
-        session['loggedin'] = True
-        return redirect(url_for('admin'))
-
+        found_user = User.objects.get(email = email, password = password)
+        if found_user is not None:
+            session['loggedin'] = True
+            return redirect(url_for('admin'))
 if __name__ == '__main__':
   app.run(debug=True)
