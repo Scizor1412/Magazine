@@ -3,7 +3,7 @@
 }
 
 .bg-login{
-    background-color: red;
+    background-image: url(/static/image/bg-login.jpg);
     background-size: cover;
 }
 

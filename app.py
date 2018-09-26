@@ -37,7 +37,6 @@ def admin():
     else:
         return redirect(url_for('login'))
 
-
 @app.route('/admin/user')
 def admin_user():
     users = User.objects()
@@ -57,7 +56,6 @@ def login():
         email = form['email']
         password = form['password']
         found_user = User.objects.get(email = email, password = password)
-        print(found_user)
         if found_user is not None:
             session['loggedin'] = True
             return redirect(url_for('admin'))

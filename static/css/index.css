@@ -1,0 +1,54 @@
+.myVideo {
+   position: absolute;
+   top:0;
+    z-index: 0;
+}
+
+.content {
+    position: absolute;
+    left: 300px;
+    top: 200px;
+    background: rgba(255, 255, 255, 0);
+    color: #f1f1f1;
+    width: 50%;
+    z-index: 1;
+}
+
+.myBtn {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: goldenrod 2px solid;
+    background: gray;
+    color: #fff;
+    cursor: pointer;
+}
+
+.myBtn1:hover {
+    width: 200px;
+    font-size: 18px;
+    padding: 10px;
+    border: none;
+    background: goldenrod;
+    color: #fff;
+    cursor: pointer;
+}
+
+.h-10{
+    height: 10px;
+}
+
+.h-80p{
+    height: 80%;
+}
+
+.w-50p{
+    width: 50%;
+}
+
+.bg-mission{
+    background-image: url(/static/image/mission.jpg);
+    background-size: cover;
+    width: 100%;
+    height: 400px;
+}
