@@ -59,6 +59,66 @@ def login():
         if found_user is not None:
             session['loggedin'] = True
             return redirect(url_for('admin'))
+# Sửa thông tin người dùng
+@app.route('/detele_user/<user_id>')
+def delete_user(user_id):
+    delete_user = User.objects.with_id(user_id)
+    if delete_user is not None:
+        delete_user.delete()
+        return redirect(url_for('admin'))
+    else:
+        return "Not found"
+
+@app.route('/edit_user/<user_id>')
+def edit_user(user_id):
+    edit_user = User.objects.with_id(user_id)
+    if edit_user is not None:
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('admin'))
+
+# Sửa thông tin bài viết
+@app.route('/delete_article/<article_id>')
+def delete_article(article_id):
+    delete_article = Article.objects.with_id(article_id)
+    if delete_article is not None:
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('admin'))
+
+
+@app.route('/edit_article/<article_id>')
+def edit_article(article_id):
+    edit_article = Article.objects.with_id(article_id)
+    if edit_article is not None:
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('admin'))
+
+# phê duyệt bài viết
+@app.route('/approval_article/<article_id>')
+def approval_article(article_id):
+    approval_article = Article.objects.with_id(article_id)
+    if approval_article is not None:
+        return redirect(url_for('admin'))
+    else:
+        approval_article = Article.objects.with_id(article_id)
+# Phê duyệt người dùng
+@app.route('/approval_user/<user_id>')
+def approval_user(user_id):
+    user_id = User.objects.with_id(user_id)
+    if user_id is not None:
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('admin'))
+        
+@app.route('/reject_user/<user_id>')
+def reject_user(user_id):
+    user_id = User.objects.with_id(user_id)
+    if user_id is not None:
+        return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('admin'))
 
 @app.route('/homepage')
 def homepage():
