@@ -31,7 +31,7 @@ def signup():
 def admin():
     if 'loggedin' in session:
         if session['loggedin'] == True:
-            return render_template('admin.html')
+            return render_template('admin.html', userid = session['id'])
         else:
             return redirect(url_for('login'))
     else:
@@ -58,8 +58,9 @@ def login():
         found_user = User.objects.get(email = email, password = password)
         if found_user is not None:
             session['loggedin'] = True
+            session['id'] = str(found_user.id)
             return redirect(url_for('admin'))
-# Sửa thông tin người dùng
+
 @app.route('/detele_user/<user_id>')
 def delete_user(user_id):
     delete_user = User.objects.with_id(user_id)
@@ -69,56 +70,123 @@ def delete_user(user_id):
     else:
         return "Not found"
 
-@app.route('/edit_user/<user_id>')
+@app.route('/edit_user/<user_id>', methods = ['GET', 'POST'])
 def edit_user(user_id):
     edit_user = User.objects.with_id(user_id)
     if edit_user is not None:
-        return redirect(url_for('admin'))
+        if request.method == 'GET':
+            return render_template('edit_user.html', edit_user = edit_user)
+        if request.method == 'POST':
+            form = request.form
+            edit_user = edit_user.update(
+                set__fullname = form['fullname'],
+                set__yob = form['yob'],
+                set__email = form['email']
+            )
+            return redirect(url_for('admin_user'))
     else:
         return redirect(url_for('admin'))
+
+@app.route('/change_password/<user_id>', methods = ['GET', 'POST'])
+def change_password(user_id):
+    user_change_password = User.objects.with_id(user_id)
+    if user_change_password is not None:
+        if request.method == 'GET':
+            return render_template ('change_password.html')
+        elif request.method == 'POST':
+            form = request.form
+            current_password = form['current_password']
+            new_password = form['new_password']
+            password= form['password']
+            if current_password == user_change_password['password']:
+                if password == new_password:
+                    user_change_password = user_change_password.update(
+                        set__password = password
+                    )
+                    return redirect(url_for('login'))
+                else:
+                    return redirect(url_for('admin'))
+            else:
+                return redirect(url_for('admin'))
+    else:
+        return redirect(url_for('admin_user'))
 
 # Sửa thông tin bài viết
 @app.route('/delete_article/<article_id>')
 def delete_article(article_id):
     delete_article = Article.objects.with_id(article_id)
     if delete_article is not None:
+        delete_article.delete()
         return redirect(url_for('admin'))
     else:
         return redirect(url_for('admin'))
 
 
-@app.route('/edit_article/<article_id>')
+@app.route('/edit_article/<article_id>', methods =['GET' ,'POST'])
 def edit_article(article_id):
     edit_article = Article.objects.with_id(article_id)
     if edit_article is not None:
-        return redirect(url_for('admin'))
+        if request.method == 'GET':
+            return redirect(url_for('edit_article.html', edit_article = edit_article))
+        elif request.method == 'POST':
+            form = request.form
+            edit_article = edit_article.update(
+                title = form['title'],
+                sapo = form['sapo'],
+                thumbnail = form['thumbnail'],
+                time = form['time'],
+                content = form['content'],
+                author = form['author']
+            )
+            return redirect(url_for('admin_article'))
     else:
         return redirect(url_for('admin'))
 
-# phê duyệt bài viết
-@app.route('/approval_article/<article_id>')
-def approval_article(article_id):
-    approval_article = Article.objects.with_id(article_id)
-    if approval_article is not None:
-        return redirect(url_for('admin'))
+@app.route('/article/approval')
+def article_approval():
+    articles = Article.objects()
+    return render_template ('article_approval.html', articles = articles)
+
+@app.route('/article/approve/<article_id>')
+def approve_article(article_id):
+    approve_article = Article.objects.with_id(article_id)
+    if approve_article is not None:
+        approve_article = approve_article.update(
+            set__level = 1
+        )
+        return redirect(url_for('article_approval'))
     else:
-        approval_article = Article.objects.with_id(article_id)
+        return redirect(url_for('article_approval'))
+
 # Phê duyệt người dùng
-@app.route('/approval_user/<user_id>')
-def approval_user(user_id):
-    user_id = User.objects.with_id(user_id)
-    if user_id is not None:
-        return redirect(url_for('admin'))
+@app.route('/user/request')
+def user_request():
+    users= User.objects()
+    return render_template ('user_approval.html', users = users)
+
+@app.route('/user/approve/<user_id>')
+def approve_user(user_id):
+    approve_user = Request.objects.with_id(user_id)
+    if approve_user is not None:
+        approve_user = approve_user.update(
+            set__level = 1,
+            set__request = False
+        )
+        return redirect(url_for('user_request'))
     else:
-        return redirect(url_for('admin'))
+        return redirect(url_for('user_request'))
+
         
 @app.route('/reject_user/<user_id>')
 def reject_user(user_id):
-    user_id = User.objects.with_id(user_id)
-    if user_id is not None:
-        return redirect(url_for('admin'))
+    reject_user = User.objects.with_id(user_id)
+    if reject_user is not None:
+        reject_user = reject_user.update(
+            set__request = False
+        )
+        return redirect(url_for('user_request'))
     else:
-        return redirect(url_for('admin'))
+        return redirect(url_for('user_request'))
 
 @app.route('/homepage')
 def homepage():

@@ -9,5 +9,7 @@
 <body>
     <a href="{{ url_for('admin_user') }}">Trang quản lý người dùng</a>
     <a href="{{ url_for('admin_article') }}">Quản lý bài viết</a>
+    <a href="{{ url_for('change_password', user_id = userid) }}">Thay đổi mật khẩu</a>
+    <a href="{{ url_for('article_approval') }}">Phê duyệt bài viết</a>
 </body>
 </html>

@@ -15,6 +15,7 @@
             <th>Title</th>
             <th>Time</th>
             <th>Author</th>
+            <th>Level</th>
             <th></th>
         </thead>
         <tbody>
@@ -24,7 +25,9 @@
                 <td>{{ article.title }}</td>
                 <td>{{ article.time }}</td>
                 <td>{{ article.author }}</td>
-                    <a href="{{ url_for('approval_article', article_id = article.id) }}">Phê duyệt</a>
+                <td>{{ article.level }}</td>
+                <td>
+                    <a href="{{ url_for('approve_article', article_id = article.id) }}">Phê duyệt</a>
                     <a href="{{ url_for('delete_article', article_id = article.id) }}">Hủy bài</a>
                 </td>
             </tr>

@@ -5,4 +5,4 @@ class User(Document):
     yob = IntField()
     email = EmailField()
     password = StringField()
-    level = IntField()
+    request = BooleanField()
