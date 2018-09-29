@@ -8,4 +8,5 @@ class Article(Document):
     time = StringField()
     author = StringField()
     level = IntField()
+    category = StringField()
 # 0 là chưa duyệt, 1 là đã duyệt và có thể hiển thị

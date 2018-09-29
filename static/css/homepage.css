@@ -1,0 +1,18 @@
+.bg-homepage-1{
+    background-image: url(../image/homepage-bg-1.jpg);
+    min-height: 720px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.bg-lightpink{
+    background-color: lightcoral;
+}
+
+.w-10{
+    width: 10%;
+}
+
+.top-40px{
+    top: 40px;
+}

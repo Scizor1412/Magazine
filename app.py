@@ -190,6 +190,11 @@ def reject_user(user_id):
 
 @app.route('/homepage')
 def homepage():
+    articles = Article.objects()
+    for article in articles:
+        article.time.replace("T", " ")
+        article.time.replace("T+07:00", "")
+
     return render_template("homepage.html")
 
 if __name__ == '__main__':
