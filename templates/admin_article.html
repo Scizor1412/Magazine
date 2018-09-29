@@ -19,7 +19,6 @@
         </thead>
         <tbody>
             {% for article in articles %}
-                {% if article.level == 1 %}
                 <tr>
                     <td>{{ loop.index }}</td>
                     <td>{{ article.title }}</td>
@@ -31,7 +30,6 @@
                         <a href="{{ url_for('delete_article', article_id = article.id) }}">Xóa</a>
                     </td>
                 </tr>
-                {% endif %}
             {% endfor %}
         </tbody>
     </table>

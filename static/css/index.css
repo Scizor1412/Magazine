@@ -17,7 +17,13 @@
     width: 200px;
     font-size: 18px;
     padding: 10px;
-    border: goldenrod 2px solid;
+    border-style: solid;
+    border-image-source: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
+    border-image-slice: 1;
+    border-bottom-width: 5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-left-width: 5px;
     background: gray;
     color: #fff;
     cursor: pointer;
@@ -28,10 +34,30 @@
     font-size: 18px;
     padding: 10px;
     border: none;
-    background: goldenrod;
+    background: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
+    border-style: solid;
+    border-image-source: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
+    border-image-slice: 1;
+    border-bottom-width: 5px;
+    border-top-width: 5px;
+    border-right-width: 5px;
+    border-left-width: 5px;
     color: #fff;
     cursor: pointer;
 }
+
+.btn-outline {
+    background: linear-gradient(to right, rgb(14, 19, 20) 10%, rgb(7, 11, 20) 30%, rgb(3, 4, 15) 80%);
+    z-index: 0;
+    border-style: solid;
+    border-image-source: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
+    border-image-slice: 1;
+    border-bottom-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-left-width: 1px;
+}
+
 
 .h-10{
     height: 10px;
@@ -51,3 +77,8 @@
     width: 100%;
     height: 400px;
 }
+
+.bg-black{
+    background-color: black;
+}
+
