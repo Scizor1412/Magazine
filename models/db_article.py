@@ -5,7 +5,8 @@ class Article(Document):
     sapo = StringField()
     thumbnail = StringField()
     content = StringField()
-    time = StringField()
+    time = DateTimeField()
     author = StringField()
     level = IntField()
+    category = StringField()
 # 0 là chưa duyệt, 1 là đã duyệt và có thể hiển thị
