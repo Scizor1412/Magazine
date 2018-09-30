@@ -55,11 +55,15 @@ def login():
         form = request.form
         email = form['email']
         password = form['password']
-        found_user = User.objects.get(email = email, password = password)
-        if found_user is not None:
-            session['loggedin'] = True
-            session['id'] = str(found_user.id)
-            return redirect(url_for('admin'))
+
+    found_user = User.objects.get(email = email, password = password)
+
+    if found_user is not None:
+        session['loggedin'] = True
+        session['id'] = str(found_user.id)
+        return redirect(url_for('admin'))
+    else:
+        return "Invalid username or password"
 
 @app.route('/detele_user/<user_id>')
 def delete_user(user_id):
