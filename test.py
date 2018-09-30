@@ -5,7 +5,6 @@ import mlab
 from datetime import datetime
 
 url = 'http://bongdanet.vn/hau-truong-san-co/nhung-vu-mua-ban-dam-noi-tieng-trong-lang-bong-da-the-gioi-tbd71819'
-conn = urlopen(url)
 mlab.connect()
 
 html_content = urlopen(url).read().decode('UTF-8')
@@ -15,10 +14,8 @@ info = soup.find('div', 'article-text-info')
 meta = info.find('meta', itemprop = 'author')
 meta2 = info.find('meta', itemprop = "datePublished")
 times = meta2['content']
-times1 = times.replace("T", " ").replace("+07:00", "").replace("-", " ")
-print (times1)
-time = datetime.strptime(times1, '%Y %m %d %H:%M:%S')
-print (time)
+times1 = times.replace("T", " ").replace("+07:00", "")
+time = datetime.strptime(times1, '%Y-%m-%d %H:%M:%S')
 img = soup.find("img", "img-detail-news")
 body = soup.find ('div', 'article-body')
 contents = body.find_all('p')
@@ -34,3 +31,5 @@ new_article = Article(
     author = meta['content'],
     time = meta2['content'],
 )
+
+new_article.save()

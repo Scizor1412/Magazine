@@ -5,7 +5,7 @@ class Article(Document):
     sapo = StringField()
     thumbnail = StringField()
     content = StringField()
-    time = StringField()
+    time = DateTimeField()
     author = StringField()
     level = IntField()
     category = StringField()

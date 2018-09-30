@@ -197,5 +197,10 @@ def homepage():
 
     return render_template("homepage.html")
 
+@app.route('/logout')
+def logout():
+    session['loggedin'] = False
+    return redirect(url_for('admin'))
+
 if __name__ == '__main__':
   app.run(debug=True)

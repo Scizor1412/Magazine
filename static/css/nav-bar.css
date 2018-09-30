@@ -1,0 +1,35 @@
+.text-nav{
+    color: #c79a3c!important;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0;
+}
+
+.text-nav2{
+    color: #c79a3c!important;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.text-nav-search{
+    color: #c79a3c!important;
+    font-family: 'Noto Sans', sans-serif;
+    font-size: 20px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 0rem 0.3rem;
+}
+
+.nav-border{
+    border-style: solid;
+    border-image-source: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
+    border-image-slice: 1;
+    border-bottom-width: 8px;
+    border-top-width: 0px;
+    border-right-width: 0px;
+    border-left-width: 0px;
+}

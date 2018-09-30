@@ -19,6 +19,7 @@
         </thead>
         <tbody>
             {% for article in articles %}
+<<<<<<< HEAD
             <tr>
                 <td>{{ loop.index }}</td>
                 <td>{{ article.title }}</td>
@@ -29,6 +30,19 @@
                     <a href="{{ url_for('delete_article', article_id = article.id) }}">Xóa</a>
                 </td>
             </tr>
+=======
+                <tr>
+                    <td>{{ loop.index }}</td>
+                    <td>{{ article.title }}</td>
+                    <td>{{ article.time }}</td>
+                    <td>{{ article.author }}</td>
+                    <td>{{ article.content }}</td>
+                    <td>
+                        <a href="{{ url_for('edit_article', article_id = article.id) }}">Thay đổi</a>
+                        <a href="{{ url_for('delete_article', article_id = article.id) }}">Xóa</a>
+                    </td>
+                </tr>
+>>>>>>> 5d7c6ba30bb22afad43740076edf915c4b8455a2
             {% endfor %}
         </tbody>
     </table>
