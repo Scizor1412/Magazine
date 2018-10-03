@@ -9,4 +9,5 @@ class Article(Document):
     author = StringField()
     level = IntField()
     category = StringField()
+    view_count = IntField(default = 0)
 # 0 là chưa duyệt, 1 là đã duyệt và có thể hiển thị
