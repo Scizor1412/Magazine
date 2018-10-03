@@ -1,8 +1,14 @@
 from flask import *
 import mlab
 from models.db_user import User
+<<<<<<< HEAD
 from models.db_article import Article, Comment
 from datetime import datetime
+=======
+from models.db_article import Article
+from sent_mail import sent_mail
+from reset_pass import *
+>>>>>>> e884336cd2dc5e2d44431b1a36b7bdeabb8eabd9
 app = Flask(__name__)
 
 mlab.connect()
@@ -73,7 +79,27 @@ def login():
             else:
                 return redirect(url_for('homepage'))
         else:
-            return "Invalid username or password"
+            if request.method == "GET":
+                return render_template('login.html')
+            elif request.method == "POST":
+                form = request.form
+                email = form['email']
+                password = form['password']
+
+            found_user = User.objects.get(email = email, password = password)
+
+            if found_user is not None:
+                session['loggedin'] = True
+                session['id'] = str(found_user.id)
+                session['level'] = found_user.level
+                if session['level'] == 0:
+                    return redirect(url_for('admin'))
+                else:
+                    return redirect(url_for('homepage'))
+            else:
+                return "Invalid username or password"
+    else:
+        return render_template('login.html')
 
 @app.route('/detele_user/<user_id>')
 def delete_user(user_id):
@@ -231,10 +257,26 @@ def template(article_id):
             article.update(push__comment = comment)
             return render_template('template.html', article = article)
 
+@app.route('/forgotpass', methods=['GET','POST'])
+def forgotpass():
+    if request.method == 'GET':
+        return render_template('forgotpass.html')
+    elif request.method == 'POST':
+        form = request.form
+        email = form['email']
+        user_reset = User.objects.get(email = email).id
+        user = User.objects.with_id(user_reset)
+        password = password_generator(size=8, chars=string.ascii_letters + string.digits)
+        user = user.update(
+            password = password
+        )
+        sent_mail(email,password)
+        return redirect(url_for('login'))
+
 @app.route('/logout')
 def logout():
     session['loggedin'] = False
-    return redirect(url_for('admin'))
+    return redirect(url_for('homepage'))
 
 if __name__ == '__main__':
   app.run(debug=True)
