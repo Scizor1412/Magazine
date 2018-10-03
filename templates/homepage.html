@@ -11,9 +11,22 @@
     {% include "nav-bar.html" %}
     <h1>Trang homepage đọc báo</h1>
     <div class="bg-homepage-1 mb-3"></div>
-    <div class="bg-product d-flex">
-        <div class="w-10 bg-light h-25 sticky-top top-40px"> akjsdhkasjdhakjd</div>
-        <div class="card-columns container p-3 mx-3">
+    <div class="bg-product d-flex justify-content-between">
+        <div class="w-15 bg-light h-25 sticky-top top-40px rounded shadow">
+            <div class="card" style="width: 100%;">
+                <div class="card-header text-center">Tin bài nổi bật</div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item text-center">
+                        <img src="{{ articles_view[0].thumbnail }}" class="img-fluid">
+                        <small>{{ articles_view[0].title }}</small>
+                    </li>
+                    <li class="list-group-item"><small>{{ articles_view[1].title }}</small></li>
+                    <li class="list-group-item"><small>{{ articles_view[2].title }}</small></li>
+                    <li class="list-group-item"><small>{{ articles_view[3].title }}</small></li>
+                </ul>
+            </div>
+        </div>
+        <div class="card-columns col-md-8 p-3 mx-3">
             <!-- Card 1 -->
             <a href="{{ url_for('template', article_id = articles[1].id) }}">
                 <div class="card">
@@ -71,16 +84,16 @@
                 </div>
             </a>
             <!-- Card 5 -->
-            <div class="card p-3 text-right">
-                <blockquote class="blockquote mb-0">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                    <footer class="blockquote-footer">
-                        <small class="text-muted">
-                            Someone famous in <cite title="Source Title">Source Title</cite>
-                        </small>
-                    </footer>
-                </blockquote>
-            </div>
+            <a href="{{ url_for('template', article_id = articles[4].id) }}">
+                <div class="card">
+                    <img class="card-img-top" src="{{ articles[4].thumbnail }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ articles[4].title }}</h5>
+                        <p class="card-text">{{ articles[4].sapo }}</p>
+                        <p class="card-text"><small class="text-muted">{{ articles[4].time }} - {{ articles[4].author }}</small></p>
+                    </div>
+                </div>
+            </a>
             <!-- Card 6 -->
             <div class="card">
                 <div class="card-body">
@@ -98,6 +111,7 @@
                 </div>
             </div>
         </div>
+        <div class="w-15"></div>
     </div>
     {% include "footer.html" %}
 </body>

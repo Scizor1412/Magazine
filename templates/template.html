@@ -8,8 +8,9 @@
 </head>
 <body>
     <h1>{{ article.title }}</h1>
-    <h4>{{ article.sapo }}</h4>
-    <small>{{ article.time }} | {{ article.author }}</small>
+    <h3>{{ article.sapo }}</h3>
+    <small>{{ article.time }} | {{ article.author }} | {{ article.view_count }}</small>
     {{ article.content|safe }}
+    {{ article.view_count }}
 </body>
 </html>
