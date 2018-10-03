@@ -190,12 +190,13 @@ def reject_user(user_id):
 
 @app.route('/homepage')
 def homepage():
-    articles = Article.objects()
-    for article in articles:
-        article.time.replace("T", " ")
-        article.time.replace("T+07:00", "")
+    articles = Article.objects.order_by('time')
+    return render_template("homepage.html", articles = articles)
 
-    return render_template("homepage.html")
+@app.route('/article/<article_id>')
+def template(article_id):
+    article = Article.objects.with_id(article_id)
+    return render_template('template.html', article = article)
 
 @app.route('/logout')
 def logout():

@@ -14,33 +14,40 @@
     <div class="bg-product d-flex">
         <div class="w-10 bg-light h-25 sticky-top top-40px"> akjsdhkasjdhakjd</div>
         <div class="card-columns container p-3 mx-3">
-            <div class="card bg-transparent" style="border: 0">
-                <div class="border p-1 bg-light rounded">
-                    <img class="card-img-top" src="../static/image/card5.jpg" alt="Card image cap">
+            <!-- Card 1 -->
+            <a href="{{ url_for('template', article_id = articles[1].id) }}">
+                <div class="card">
+                    <img class="card-img-top" src="{{ articles[1].thumbnail }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ articles[1].title }}</h5>
+                        <p class="card-text">{{ articles[1].sapo }}</p>
+                        <p class="card-text"><small class="text-muted">{{ articles[1].time }} - {{ articles[1].author }}</small></p>
+                    </div>
                 </div>
-                <div class="card-body border rounded mt-1 bg-light p-1">
-                    <h5 class="card-title">Card title that wraps to a new line</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            </a>
+            <!-- Card 2 -->
+            <a href="{{ url_for('template', article_id = articles[3].id) }}">
+                <div class="card">
+                    <img class="card-img-top" src="{{ articles[3].thumbnail }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ articles[3].title }}</h5>
+                        <p class="card-text">{{ articles[3].sapo }}</p>
+                        <p class="card-text"><small class="text-muted">{{ articles[3].time }} - {{ articles[3].author }}</small></p>
+                    </div>
                 </div>
-            </div>
-            <div class="card p-3">
-                <blockquote class="blockquote mb-0 card-body">
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
-                <footer class="blockquote-footer">
-                    <small class="text-muted">
-                        Someone famous in <cite title="Source Title">Source Title</cite>
-                    </small>
-                </footer>
-                </blockquote>
-            </div>
+            </a>
+            <!-- Card 3 -->
+            <a href="{{ url_for('template', article_id = articles[0].id) }}">
             <div class="card">
-                <img class="card-img-top" src="../static/image/card1.jpg" alt="Card image cap">
+                <img class="card-img-top" src="{{ articles[0].thumbnail }}" alt="Card image cap">
                 <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has supporting text below as a natural lead-in to additional content.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                    <h5 class="card-title">{{ articles[0].title }}</h5>
+                    <p class="card-text">{{ articles[0].sapo }}</p>
+                    <p class="card-text"><small class="text-muted">{{ articles[0].time }} - {{ articles[0].author }}</small></p>
                 </div>
             </div>
+            </a>
+            <!-- center card -->
             <div class="card bg-primary text-white text-center p-3">
                 <h4>Tin Game</h4>
                 <blockquote class="blockquote mb-0">
@@ -52,16 +59,18 @@
                     </footer>
             </blockquote>
             </div>
-            <div class="card text-center">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This card has a regular title and short paragraphy of text below it.</p>
-                    <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+            <!-- Card 4 -->
+            <a href="{{ url_for('template', article_id = articles[2].id) }}">
+                <div class="card">
+                    <img class="card-img-top" src="{{ articles[2].thumbnail }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ articles[2].title }}</h5>
+                        <p class="card-text">{{ articles[2].sapo }}</p>
+                        <p class="card-text"><small class="text-muted">{{ articles[2].time }} - {{ articles[2].author }}</small></p>
+                    </div>
                 </div>
-            </div>
-            <div class="card">
-                <img class="card-img" src="../static/image/card3.jpg" alt="Card image">
-            </div>
+            </a>
+            <!-- Card 5 -->
             <div class="card p-3 text-right">
                 <blockquote class="blockquote mb-0">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
@@ -72,6 +81,7 @@
                     </footer>
                 </blockquote>
             </div>
+            <!-- Card 6 -->
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Card title</h5>
@@ -79,6 +89,7 @@
                     <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
                 </div>
             </div>
+            <!-- Card 7 -->
             <div class="card">
                 <img class="card-img-top" src="../static/image/card1.jpg" alt="Card image cap">
                 <div class="card-body">
