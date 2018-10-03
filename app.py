@@ -90,7 +90,7 @@ def edit_user(user_id):
             return render_template('edit_user.html', edit_user = edit_user)
         if request.method == 'POST':
             form = request.form
-            edit_user = edit_user.update(
+            edit_user.update(
                 set__fullname = form['fullname'],
                 set__yob = form['yob'],
                 set__email = form['email']
@@ -112,7 +112,7 @@ def change_password(user_id):
             password= form['password']
             if current_password == user_change_password['password']:
                 if password == new_password:
-                    user_change_password = user_change_password.update(
+                    user_change_password.update(
                         set__password = password
                     )
                     return redirect(url_for('login'))
@@ -142,7 +142,7 @@ def edit_article(article_id):
             return redirect(url_for('edit_article.html', edit_article = edit_article))
         elif request.method == 'POST':
             form = request.form
-            edit_article = edit_article.update(
+            edit_article.update(
                 title = form['title'],
                 sapo = form['sapo'],
                 thumbnail = form['thumbnail'],
@@ -163,7 +163,7 @@ def article_approval():
 def approve_article(article_id):
     approve_article = Article.objects.with_id(article_id)
     if approve_article is not None:
-        approve_article = approve_article.update(
+        approve_article.update(
             set__level = 1
         )
         return redirect(url_for('article_approval'))
@@ -180,7 +180,7 @@ def user_request():
 def approve_user(user_id):
     approve_user = Request.objects.with_id(user_id)
     if approve_user is not None:
-        approve_user = approve_user.update(
+        approve_user.update(
             set__level = 1,
             set__request = False
         )
@@ -193,7 +193,7 @@ def approve_user(user_id):
 def reject_user(user_id):
     reject_user = User.objects.with_id(user_id)
     if reject_user is not None:
-        reject_user = reject_user.update(
+        reject_user.update(
             set__request = False
         )
         return redirect(url_for('user_request'))
@@ -202,12 +202,16 @@ def reject_user(user_id):
 
 @app.route('/homepage')
 def homepage():
-    articles = Article.objects.order_by('time')
-    return render_template("homepage.html", articles = articles)
+    articles = Article.objects.order_by('-time')
+    articles_view = Article.objects.order_by('-view_count')
+    return render_template("homepage.html", articles = articles, articles_view = articles_view)
 
 @app.route('/article/<article_id>')
 def template(article_id):
     article = Article.objects.with_id(article_id)
+    article.update(
+        set__view_count = article['view_count'] +1,
+    )
     return render_template('template.html', article = article)
 
 @app.route('/logout')
