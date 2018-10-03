@@ -1,9 +1,0 @@
-.footer-border{
-    border-style: solid;
-    border-image-source: linear-gradient(to right, rgb(131, 99, 35) 0px, rgb(195, 165, 104) 51%, rgb(131, 99, 35) 100%);
-    border-image-slice: 1;
-    border-bottom-width: 0px;
-    border-top-width: 8px;
-    border-right-width: 0px;
-    border-left-width: 0px;
-}

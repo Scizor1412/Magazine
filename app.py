@@ -23,6 +23,7 @@ def signup():
             yob = form['yob'],
             email = form['email'],
             password = form['password'],
+            level = int(form['level'])
         )
         new_user.save()
         return redirect(url_for('login'))
@@ -30,10 +31,10 @@ def signup():
 @app.route('/admin')
 def admin():
     if 'loggedin' in session:
-        if session['loggedin'] == True:
+        if session['loggedin'] == True and session['level'] == 0:
             return render_template('admin.html', userid = session['id'])
         else:
-            return redirect(url_for('login'))
+            return redirect(url_for('homepage'))
     else:
         return redirect(url_for('login'))
 
@@ -49,17 +50,28 @@ def admin_article():
 
 @app.route('/login', methods = ["GET", "POST"])
 def login():
-    if request.method == "GET":
-        return render_template('login.html')
-    elif request.method == "POST":
-        form = request.form
-        email = form['email']
-        password = form['password']
+    if session['loggedin'] == True:
+        return redirect(url_for('homepage'))
+    else:
+        if request.method == "GET":
+            return render_template('login.html')
+        elif request.method == "POST":
+            form = request.form
+            email = form['email']
+            password = form['password']
+
         found_user = User.objects.get(email = email, password = password)
+
         if found_user is not None:
             session['loggedin'] = True
             session['id'] = str(found_user.id)
-            return redirect(url_for('admin'))
+            session['level'] = found_user.level
+            if session['level'] == 0:
+                return redirect(url_for('admin'))
+            else:
+                return redirect(url_for('homepage'))
+        else:
+            return "Invalid username or password"
 
 @app.route('/detele_user/<user_id>')
 def delete_user(user_id):
