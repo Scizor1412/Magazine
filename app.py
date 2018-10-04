@@ -1,14 +1,11 @@
 from flask import *
 import mlab
 from models.db_user import User
-<<<<<<< HEAD
 from models.db_article import Article, Comment
 from datetime import datetime
-=======
-from models.db_article import Article
 from sent_mail import sent_mail
 from reset_pass import *
->>>>>>> e884336cd2dc5e2d44431b1a36b7bdeabb8eabd9
+
 app = Flask(__name__)
 
 mlab.connect()
@@ -60,24 +57,6 @@ def login():
     if "loggedin" in session:
         if session['loggedin'] == True:
             return redirect(url_for('homepage'))
-    else:
-        if request.method == "GET":
-            return render_template('login.html')
-        elif request.method == "POST":
-            form = request.form
-            email = form['email']
-            password = form['password']
-
-        found_user = User.objects.get(email = email, password = password)
-
-        if found_user is not None:
-            session['loggedin'] = True
-            session['id'] = str(found_user.id)
-            session['level'] = found_user.level
-            if session['level'] == 0:
-                return redirect(url_for('admin'))
-            else:
-                return redirect(url_for('homepage'))
         else:
             if request.method == "GET":
                 return render_template('login.html')
@@ -97,9 +76,39 @@ def login():
                 else:
                     return redirect(url_for('homepage'))
             else:
-                return "Invalid username or password"
+                return redirect(url_for('login'))
     else:
-        return render_template('login.html')
+        if request.method == "GET":
+            return render_template('login.html')
+        elif request.method == "POST":
+            form = request.form
+            email = form['email']
+            password = form['password']
+
+        found_user = User.objects.get(email = email, password = password)
+
+        if found_user is not None:
+            session['loggedin'] = True
+            session['id'] = str(found_user.id)
+            session['level'] = found_user.level
+            if session['level'] == 0:
+                return redirect(url_for('admin'))
+            else:
+                return redirect(url_for('homepage'))
+        else:
+            return "Invalid username or password"
+
+@app.route('/profile')
+def profile():
+    if "loggedin" in session:
+        if session['loggedin'] == True:
+            user_id = session['id']
+            user_profile = User.objects.with_id(user_id)
+            return render_template('profile.html',user_profile = user_profile)
+        else:
+            return redirect(url_for('login'))
+    else:
+        return redirect(url_for('login'))
 
 @app.route('/detele_user/<user_id>')
 def delete_user(user_id):

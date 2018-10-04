@@ -4,8 +4,10 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Quên mật khẩu</title>
+    {% include "meta-data.html" %}
 </head>
 <body>
+    {% include "nav-bar.html" %}
     <h1>Quên mật khẩu</h1>
     <form method="POST">
         <label>Email</label>
@@ -17,5 +19,6 @@
         <br>
         <input type="submit" value="Reset mật khẩu">
     </form>
+    {% include "footer.html" %}
 </body>
 </html>

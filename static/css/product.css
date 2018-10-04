@@ -18,6 +18,10 @@
     height: 750px;
 }
 
+.h-500px{
+    height: 500px;
+}
+
 .font-noto{
     font-family: 'Noto Serif KR', sans-serif;
 }

@@ -7,21 +7,22 @@
     {% include "meta-data.html" %}
 </head>
 <body>
-    <form method="POST">
-        <label>Mật khẩu hiện thời</label>
-        <br>
-        <input type="password">
-        <br>
-        <label>Mật khẩu mới</label>
-        <br>
-        <input type="password">
-        <br>
-        <label>Xác nhận mật khẩu mới</label>
-        <br>
-        <input type="password">
-        <br>
-        <br>
-        <input type="submit" value="Lưu thay đổi">
-    </form>
+    {% include "nav-bar.html" %}
+    <div class="d-flex h-750px bg-homepage-1">
+        <div class="col-md-4 mt-4">
+            <p class="font-noto">{{ user_profile.email }}</p>
+            {% if user_profile.level == 0 %}
+            <p class="font-noto">Cấp thành viên: Admin</p>
+            {% elif user_profile.level == 1 %}
+            <p class="font-noto">Cấp thành viên: Moderator</p>
+            {% else %}
+            <p class="font-noto">Cấp thành viên: Thành viên thường</p>
+            {% endif %}
+        </div>
+        <div class="col-md-8 mt-4">
+            <a href="{{ url_for('change_password', user_id = user_profile.id)}}">Thay đổi mật khẩu</a>
+        </div>
+    </div>
+    {% include "footer.html" %}
 </body>
 </html>
