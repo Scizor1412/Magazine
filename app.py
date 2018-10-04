@@ -1,9 +1,14 @@
 from flask import *
 import mlab
 from models.db_user import User
+<<<<<<< HEAD
+from models.db_article import Article, Comment
+from datetime import datetime
+=======
 from models.db_article import Article
 from sent_mail import sent_mail
 from reset_pass import *
+>>>>>>> e884336cd2dc5e2d44431b1a36b7bdeabb8eabd9
 app = Flask(__name__)
 
 mlab.connect()
@@ -52,9 +57,27 @@ def admin_article():
 
 @app.route('/login', methods = ["GET", "POST"])
 def login():
-    if 'loggedin' in session:
+    if "loggedin" in session:
         if session['loggedin'] == True:
             return redirect(url_for('homepage'))
+    else:
+        if request.method == "GET":
+            return render_template('login.html')
+        elif request.method == "POST":
+            form = request.form
+            email = form['email']
+            password = form['password']
+
+        found_user = User.objects.get(email = email, password = password)
+
+        if found_user is not None:
+            session['loggedin'] = True
+            session['id'] = str(found_user.id)
+            session['level'] = found_user.level
+            if session['level'] == 0:
+                return redirect(url_for('admin'))
+            else:
+                return redirect(url_for('homepage'))
         else:
             if request.method == "GET":
                 return render_template('login.html')
@@ -93,7 +116,7 @@ def edit_user(user_id):
     if edit_user is not None:
         if request.method == 'GET':
             return render_template('edit_user.html', edit_user = edit_user)
-        if request.method == 'POST':
+        elif request.method == 'POST':
             form = request.form
             edit_user.update(
                 set__fullname = form['fullname'],
@@ -211,13 +234,28 @@ def homepage():
     articles_view = Article.objects.order_by('-view_count')
     return render_template("homepage.html", articles = articles, articles_view = articles_view)
 
-@app.route('/article/<article_id>')
+@app.route('/article/<article_id>', methods = ["GET", "POST"])
 def template(article_id):
     article = Article.objects.with_id(article_id)
-    article.update(
-        set__view_count = article['view_count'] +1,
-    )
-    return render_template('template.html', article = article)
+    if request.method == "GET":
+        article.update(
+            set__view_count = article['view_count'] +1,
+        )
+        return render_template('template.html', article = article)
+    elif request.method == "POST":
+        if "loggedin" not in session:
+            return redirect(url_for('login'))
+        else:
+            author = User.objects.with_id(session['id'])
+            form = request.form
+            comment = Comment(
+                author = author.fullname,
+                time = datetime.now(),
+                content = form['content']
+            )
+            comment.save()
+            article.update(push__comment = comment)
+            return render_template('template.html', article = article)
 
 @app.route('/forgotpass', methods=['GET','POST'])
 def forgotpass():
