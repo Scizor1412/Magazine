@@ -287,5 +287,9 @@ def logout():
     session['loggedin'] = False
     return redirect(url_for('homepage'))
 
+@app.route('/comming')
+def comming():
+    return render_template('comming-soon.html')
+
 if __name__ == '__main__':
   app.run(debug=True)

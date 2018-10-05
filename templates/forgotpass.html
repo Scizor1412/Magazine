@@ -8,17 +8,19 @@
 </head>
 <body>
     {% include "nav-bar.html" %}
+    <div class="m-4">
     <h1>Quên mật khẩu</h1>
-    <form method="POST">
-        <label>Email</label>
-        <br>
-        <input type="text" name="email" placeholder="Email">
-        <br>
-        <input type="checkbox">
-        <label>Tôi không phải là người máy</label>
-        <br>
-        <input type="submit" value="Reset mật khẩu">
-    </form>
+        <form method="POST">
+            <label>Email</label>
+            <br>
+            <input type="text" name="email" placeholder="Email">
+            <br>
+            <input type="checkbox">
+            <label>Tôi không phải là người máy</label>
+            <br>
+            <input type="submit" value="Reset mật khẩu">
+        </form>
+    </div>
     {% include "footer.html" %}
 </body>
 </html>

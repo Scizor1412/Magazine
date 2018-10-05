@@ -8,19 +8,31 @@
 </head>
 <body>
     {% include "nav-bar.html" %}
-    <div class="d-flex h-750px bg-homepage-1">
-        <div class="col-md-4 mt-4">
-            <p class="font-noto">{{ user_profile.email }}</p>
-            {% if user_profile.level == 0 %}
-            <p class="font-noto">Cấp thành viên: Admin</p>
-            {% elif user_profile.level == 1 %}
-            <p class="font-noto">Cấp thành viên: Moderator</p>
-            {% else %}
-            <p class="font-noto">Cấp thành viên: Thành viên thường</p>
-            {% endif %}
-        </div>
-        <div class="col-md-8 mt-4">
-            <a href="{{ url_for('change_password', user_id = user_profile.id)}}">Thay đổi mật khẩu</a>
+    <div>
+        <div class="bg-homepage-1" style="opacity:0.5"></div>
+        <div class="d-flex h-750px profile d-flex align-items-center">
+            <div class="col-md-4 h-90p">
+                <div class="m-4">
+                    <img src="../static/image/user.jpeg" height="250px" width="250px">
+                    <br><br>
+                    <h2 class="font-noto text-primary">{{ user_profile.email }}</h2>
+                    <h4 class="font-noto">Họ và tên: {{ user_profile.fullname }}</h4>
+                    <h4 class="font-noto">Năm sinh: {{ user_profile.yob }}</h4>
+                    {% if user_profile.level == 0 %}
+                    <h4 class="font-noto">Cấp thành viên: Admin</h4>
+                    {% elif user_profile.level == 1 %}
+                    <h4 class="font-noto">Cấp thành viên: Moderator</h4>
+                    {% else %}
+                    <h4 class="font-noto">Cấp thành viên: Thành viên thường</h4>
+                    {% endif %}
+                    <h4 class="font-noto">Sở thích cá nhân:</h4>
+                    </div>
+            </div>
+            <div class="col-md-8 mt-4 h-90p d-flex justify-content-center align-items-center">
+                <div class="mt-5">
+                    <a href="{{ url_for('change_password', user_id = user_profile.id)}}"><h1>Thay đổi mật khẩu</h1></a>
+                </div>
+            </div>
         </div>
     </div>
     {% include "footer.html" %}
