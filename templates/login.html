@@ -4,14 +4,15 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Trang đăng nhập</title>
+
     {% include "meta-data.html" %}
-    <link rel="stylesheet" href="../static/css/login.css">
+    
 </head>
 <body>
     <!-- Làm background -->
     <div class="d-flex justify-content-center bg-login h-800px">
         <!-- Card ảnh-->
-        <div class="card" style="width: 50rem; height: 80%; margin-top: 50px;">
+        <div class="card" style="width: 35rem; height: 65%; margin-top: 50px;">
             <div class="card bg-dark text-light">
                 <img class="card-img" src="../static/image/image_login.jpg" alt="Card image">
                 <div class="card-img-overlay d-flex justify-content-center align-items-center">
@@ -37,7 +38,10 @@
                     <div class="d-flex">
                     <button type="submit" class="btn btn-primary">Đăng nhập</button>
                     <div class="d-flex align-items-end">
-                        <a href="#" class="card-link"><small class="font-italic text-muted">Quên mật khẩu?</small></a>
+                        <a href="{{ url_for('forgotpass') }}" class="card-link"><small class="font-italic text-muted">Quên mật khẩu?</small></a>
+                    </div>
+                    <div class="d-flex align-items-end">
+                        <a href="{{ url_for('signup') }}" class="card-link"><small class="font-italic text-muted ml-1">Chưa có tài khoản?</small></a>
                     </div> 
                 </form>
             </div>

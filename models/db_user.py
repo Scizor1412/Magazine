@@ -5,4 +5,6 @@ class User(Document):
     yob = IntField()
     email = EmailField()
     password = StringField()
-    level = IntField()
+    request = BooleanField()
+    level = IntField(Default = 3)
+# 0 là admin, 1 là user được phép post bài, 2 là user chờ phê duyệt, 3 là user được cmt, mặc định tạo tài khoản là 3

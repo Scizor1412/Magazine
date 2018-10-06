@@ -8,17 +8,17 @@
 </head>
 <body>
     <h2>Trang quản lý thông tin người dùng</h2>
-    <a href="{{ url_for('change_password')">Thay đổi mật khẩu</a>
     <form method="POST">
         <label>Fullname:</label> <br>
-        <input type="text" name="fullname" placeholder="{{ user.fullname }}">
+        <input type="text" name="fullname" placeholder="{{ edit_user.fullname }}">
         <br>
         <label>Yob:</label> <br>
-        <input type="text" name="yob" placeholder="{{ user.yob }}">
+        <input type="text" name="yob" placeholder="{{ edit_user.yob }}">
         <br>
         <label>Email:</label> <br>
-        <input type="email" name="email" placeholder="{{ user.email }}">
+        <input type="email" name="email" placeholder="{{ edit_user.email }}">
         <br>
+        <input type="submit" value="Submit">
     </form>
 </body>
 </html>
