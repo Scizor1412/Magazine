@@ -103,28 +103,31 @@
 /* nav-bar */
 .text-nav{
     color: #c79a3c!important;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     padding: 0;
+    line-height: 30px;
 }
 
 .text-nav2{
     color: #c79a3c!important;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 15px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 14px;
     font-weight: bold;
     text-transform: uppercase;
+    line-height: 30px;
 }
 
 .text-nav-search{
     color: #c79a3c!important;
-    font-family: 'Noto Sans', sans-serif;
-    font-size: 20px;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 16px;
     font-weight: bold;
     text-transform: uppercase;
     padding: 0rem 0.3rem;
+    line-height: 30px;
 }
 
 .nav-border{

@@ -4,7 +4,7 @@ from models.db_article import Article
 import mlab
 from datetime import datetime
 
-url = 'http://genk.vn/apple-ho-tro-1-trieu-usd-cho-cac-nan-nhan-vu-dong-dat-va-song-than-tai-palu-indonesia-20181003141720915.chn'
+url = 'http://genk.vn/co-1000-usd-ban-se-lam-gi-xiaomi-goi-y-ban-quat-pocophone-f1-ngon-hon-bo-tien-mua-iphone-2018-20180913185721318.chn'
 mlab.connect()
 
 html_content = urlopen(url).read().decode('UTF-8')
@@ -12,7 +12,7 @@ soup = BeautifulSoup(html_content,'html.parser')
 
 title = soup.find('h1', 'kbwc-title clearfix').string.replace('\r\n', '')
 sapo = soup.find('h2', 'knc-sapo').string
-thumbnail = (soup.find('div', 'VCSortableInPreviewMode active').find('div').find('img'))['src']
+thumbnail = (soup.find('div', 'VCSortableInPreviewMode noCaption active').find('div').find('img'))['src']
 contents = soup.find('div', 'knc-content').find_all('p', '')
 content = ""
 for i in contents:
@@ -27,7 +27,8 @@ new_article = Article(
     thumbnail = thumbnail,
     content = content,
     author = author,
-    time = time
+    time = time,
+    category = "Tech"
 )
 
 new_article.save()

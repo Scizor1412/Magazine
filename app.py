@@ -176,7 +176,7 @@ def edit_article(article_id):
     edit_article = Article.objects.with_id(article_id)
     if edit_article is not None:
         if request.method == 'GET':
-            return redirect(url_for('edit_article.html', edit_article = edit_article))
+            return render_template('edit_article.html', edit_article = edit_article)
         elif request.method == 'POST':
             form = request.form
             edit_article.update(
@@ -237,34 +237,42 @@ def reject_user(user_id):
     else:
         return redirect(url_for('user_request'))
 
-@app.route('/homepage')
+@app.route('/homepage', methods = ["GET", "POST"])
 def homepage():
     articles = Article.objects.order_by('-time')
     articles_view = Article.objects.order_by('-view_count')
-    return render_template("homepage.html", articles = articles, articles_view = articles_view)
+    if request.method == "GET":
+        return render_template("homepage.html", articles = articles, articles_view = articles_view)
+    elif request.method == "POST":
+        return redirect(url_for('search', keywords=request.form['keywords']))
 
 @app.route('/article/<article_id>', methods = ["GET", "POST"])
 def template(article_id):
     article = Article.objects.with_id(article_id)
+    articles_view = Article.objects.order_by('-view_count')
+    articles_type_time = Article.objects(category= article.category).order_by('-time')
     if request.method == "GET":
         article.update(
             set__view_count = article['view_count'] +1,
         )
-        return render_template('template.html', article = article)
+        return render_template('template.html', article = article, articles_view = articles_view, articles_type_time=articles_type_time)
     elif request.method == "POST":
-        if "loggedin" not in session:
-            return redirect(url_for('login'))
+        if request.form['search'] in request.form:
+            return redirect(url_for('search', keywords=request.form['keywords']))
         else:
-            author = User.objects.with_id(session['id'])
-            form = request.form
-            comment = Comment(
-                author = author.fullname,
-                time = datetime.now(),
-                content = form['content']
-            )
-            comment.save()
-            article.update(push__comment = comment)
-            return render_template('template.html', article = article)
+            if "loggedin" not in session:
+                return redirect(url_for('login'))
+            else:
+                author = User.objects.with_id(session['id'])
+                form = request.form
+                comment = Comment(
+                    author = author.fullname,
+                    time = datetime.now(),
+                    content = form['content']
+                )
+                comment.save()
+                article.update(push__comment = comment)
+                return render_template('template.html', article = article, articles_view = articles_view)
 
 @app.route('/forgotpass', methods=['GET','POST'])
 def forgotpass():
@@ -285,11 +293,16 @@ def forgotpass():
 @app.route('/logout')
 def logout():
     session['loggedin'] = False
-    return redirect(url_for('homepage'))
+    return redirect(url_for('login'))
 
-@app.route('/comming')
-def comming():
-    return render_template('comming-soon.html')
+@app.route('/search/<keywords>')
+def search(keywords):
+    articles = Article.objects(title__icontains=keywords)
+    return render_template ('result.html', articles = articles, keywords = keywords)
+
+@app.route('/coming')
+def coming():
+    return render_template('coming-soon.html')
 
 if __name__ == '__main__':
   app.run(debug=True)
