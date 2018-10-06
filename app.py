@@ -249,6 +249,7 @@ def homepage():
 @app.route('/article/<article_id>', methods = ["GET", "POST"])
 def template(article_id):
     article = Article.objects.with_id(article_id)
+    print(article)
     articles_view = Article.objects.order_by('-view_count')
     articles_type_time = Article.objects(category= article.category).order_by('-time')
     if request.method == "GET":
@@ -257,8 +258,10 @@ def template(article_id):
         )
         return render_template('template.html', article = article, articles_view = articles_view, articles_type_time=articles_type_time)
     elif request.method == "POST":
-        if request.form['search'] in request.form:
-            return redirect(url_for('search', keywords=request.form['keywords']))
+        form = request.form
+        if 'search' in form: 
+            return redirect(url_for('search', keywords=form['search']))
+            # return "Search"
         else:
             if "loggedin" not in session:
                 return redirect(url_for('login'))
@@ -273,6 +276,9 @@ def template(article_id):
                 comment.save()
                 article.update(push__comment = comment)
                 return render_template('template.html', article = article, articles_view = articles_view)
+            # return "Comment"
+        # if request.form['search'] in request.form:
+        # else:
 
 @app.route('/forgotpass', methods=['GET','POST'])
 def forgotpass():

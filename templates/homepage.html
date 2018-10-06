@@ -12,20 +12,16 @@
     <h1 class="profile font-noto" style="text-align: center">GHỀNH ĐÁ 4 VN (Nhái Genk.vn)</h1>
     <div class="bg-homepage-1 mb-3"></div>
     <div class="bg-product d-flex justify-content-between">
-        <div class="w-15 bg-light h-25 sticky-top top-40px rounded shadow">
-            <div class="card" style="width: 100%;">
-                <div class="card-header text-center font-weight-bold text-light font-oswald bg-list">Tin bài nổi bật</div>
-                <ul class="list-group list-group-flush">
-                    {% for i in range (2) %}
-                    <a href="{{ url_for('template', article_id = articles_view[i].id) }}">
-                    <li class="list-group-item text-center btn-light">
-                        <img src="{{ articles_view[i].thumbnail }}" class="img-fluid">
-                        <small>{{ articles_view[i].title }}</small>
-                    </li>
-                    </a>
-                    {% endfor %}
-                </ul>
-            </div>
+        <div class="col-md-2 p-2 bg-light border rounded pt-2 sticky-top h-25 d-flex flex-column justify-content-around" style="top: 100px">
+            <nav class="btn btn-warning navbar navbar-light mb-1">
+                <a class="navbar-brand" href="{{ url_for('homepage') }}">Trang chủ</a>
+            </nav>
+            <nav class="btn btn-primary navbar navbar-light mb-1">
+                <a class="navbar-brand" href="{{ url_for('admin_user') }}">Quản lý người dùng</a>
+            </nav>
+            <nav class="btn btn-warning navbar navbar-light mb-1">
+                <a class="navbar-brand" href="{{ url_for('admin_article') }}">Quản lý bài viết</a>
+            </nav>
         </div>
         <div class="card-columns col-md-8 p-3 mx-3">
             <!-- Card 1 -->
@@ -104,7 +100,21 @@
                 </div>
             </div>
         </div>
-        <div class="w-15"></div>
+        <div class="w-15 bg-light h-25 sticky-top top-40px rounded shadow">
+            <div class="card" style="width: 100%;">
+                <div class="card-header text-center font-weight-bold text-light font-oswald bg-list">Tin bài nổi bật</div>
+                <ul class="list-group list-group-flush">
+                    {% for i in range (2) %}
+                    <a href="{{ url_for('template', article_id = articles_view[i].id) }}">
+                    <li class="list-group-item text-center btn-light">
+                        <img src="{{ articles_view[i].thumbnail }}" class="img-fluid">
+                        <small>{{ articles_view[i].title }}</small>
+                    </li>
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
     </div>
     {% include "footer.html" %}
 </body>
