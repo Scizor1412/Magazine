@@ -176,7 +176,7 @@ def edit_article(article_id):
     edit_article = Article.objects.with_id(article_id)
     if edit_article is not None:
         if request.method == 'GET':
-            return redirect(url_for('edit_article.html', edit_article = edit_article))
+            return render_template('edit_article.html', edit_article = edit_article)
         elif request.method == 'POST':
             form = request.form
             edit_article.update(
@@ -209,7 +209,7 @@ def approve_article(article_id):
 
 # Phê duyệt người dùng
 @app.route('/user/request')
-def user_request():
+def user_approval():
     users= User.objects()
     return render_template ('user_approval.html', users = users)
 
@@ -290,6 +290,10 @@ def logout():
 @app.route('/comming')
 def comming():
     return render_template('comming-soon.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == '__main__':
   app.run(debug=True)
