@@ -209,7 +209,7 @@ def approve_article(article_id):
 
 # Phê duyệt người dùng
 @app.route('/user/request')
-def user_request():
+def user_approval():
     users= User.objects()
     return render_template ('user_approval.html', users = users)
 
@@ -303,6 +303,10 @@ def search(keywords):
 @app.route('/coming')
 def coming():
     return render_template('coming-soon.html')
+
+@app.route('/contact')
+def contact():
+    return render_template('contact.html')
 
 if __name__ == '__main__':
   app.run(debug=True)

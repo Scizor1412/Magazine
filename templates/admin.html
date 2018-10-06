@@ -9,47 +9,7 @@
 </head>
 <body>
     {% include "nav-bar.html" %}
-    <div class="m-4">
-        <ul class="nav flex-column">
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Quản lý người dùng</a>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">Action</a>
-                    <a class="dropdown-item" href="#">Another action</a>
-                    <a class="dropdown-item" href="#">Something else here</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" href="#">Separated link</a>
-                </div>
-            </li>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-                <div class="dropdown-menu">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>
-        </ul>
-        <br>
-        <a href="{{ url_for('admin_user') }}">Trang quản lý người dùng</a>
-        <br><br>
-        <a href="{{ url_for('admin_article') }}">Quản lý bài viết</a>
-        <br><br>
-        <a href="{{ url_for('change_password', user_id = userid) }}">Thay đổi mật khẩu</a>
-        <br><br>
-        <a href="{{ url_for('article_approval') }}">Phê duyệt bài viết</a>
-        <br><br>
-        <a href="{{ url_for('logout') }}">Đăng xuất</a>
-        <br><br>
-    </div>
+    {% include "vertical-bar.html" %}
     {% include "footer.html" %}
 </body>
 </html>
