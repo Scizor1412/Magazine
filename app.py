@@ -158,29 +158,39 @@ def edit_user(user_id):
     else:
         return redirect(url_for('admin'))
 
-@app.route('/change_password/<user_id>', methods = ['GET', 'POST'])
-def change_password(user_id):
-    user_change_password = User.objects.with_id(user_id)
-    if user_change_password is not None:
-        if request.method == 'GET':
-            return render_template ('change_password.html')
-        elif request.method == 'POST':
-            form = request.form
-            current_password = form['current_password']
-            new_password = form['new_password']
-            password= form['password']
-            if current_password == user_change_password['password']:
-                if password == new_password:
-                    user_change_password.update(
-                        set__password = password
-                    )
-                    return redirect(url_for('login'))
-                else:
-                    return redirect(url_for('admin'))
+@app.route('/change_password', methods = ['GET', 'POST'])
+def change_password():
+    if "loggedin" in session:
+        if session['loggedin'] == True:
+            user_id = session['id']
+            user_change_password = User.objects.with_id(user_id)
+            # return render_template('profile.html',user_change_password = user_change_password)
+        
+    # user_change_password = User.objects.with_id(user_id)
+            if user_change_password is not None:
+                if request.method == 'GET':
+                    return render_template ('change_password.html')
+                elif request.method == 'POST':
+                    form = request.form
+                    current_password = form['current_password']
+                    new_password = form['new_password']
+                    password= form['password']
+                    if current_password == user_change_password['password']:
+                        if password == new_password:
+                            user_change_password.update(
+                                set__password = password
+                            )
+                            return redirect(url_for('login'))
+                        else:
+                            return redirect(url_for('admin'))
+                    else:
+                        return redirect(url_for('admin'))
             else:
-                return redirect(url_for('admin'))
+                return redirect(url_for('aprofile'))
+        else:
+            return redirect(url_for('login'))
     else:
-        return redirect(url_for('admin_user'))
+        return redirect(url_for('login'))
 
 # Sửa thông tin bài viết
 @app.route('/delete_article/<article_id>')
@@ -334,15 +344,39 @@ def logout():
 @app.route('/search/<keywords>')
 def search(keywords):
     articles = Article.objects(title__icontains=keywords)
-    return render_template ('result.html', articles = articles, keywords = keywords)
+    articles_view = Article.objects.order_by('-view_count')
+    return render_template ('result.html', articles = articles, keywords = keywords, articles_view=articles_view)
 
 @app.route('/coming')
 def coming():
     return render_template('coming-soon.html')
 
-@app.route('/contact')
-def contact():
-    return render_template('contact.html')
+@app.route('/category/game')
+def game():
+    articles = Article.objects(category = "Games").order_by('-time')
+    articles_view = Article.objects.order_by('-view_count')
+    if request.method == "GET":
+        return render_template("homepage.html", articles = articles, articles_view = articles_view)
+    elif request.method == "POST":
+        return redirect(url_for('search', keywords=request.form['keywords']))
+
+@app.route('/category/film')
+def film():
+    articles = Article.objects(category = "Film").order_by('-time')
+    articles_view = Article.objects.order_by('-view_count')
+    if request.method == "GET":
+        return render_template("homepage.html", articles = articles, articles_view = articles_view)
+    elif request.method == "POST":
+        return redirect(url_for('search', keywords=request.form['keywords']))
+
+@app.route('/category/tech')
+def tech():
+    articles = Article.objects(category = "Tech").order_by('-time')
+    articles_view = Article.objects.order_by('-view_count')
+    if request.method == "GET":
+        return render_template("homepage.html", articles = articles, articles_view = articles_view)
+    elif request.method == "POST":
+        return redirect(url_for('search', keywords=request.form['keywords']))
 
 if __name__ == '__main__':
   app.run(debug=True)
