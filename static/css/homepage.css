@@ -17,6 +17,10 @@
     width: 20%;
 }
 
+.w-100{
+    width: 100%;
+}
+
 .font-oswald{
     font-family: 'Oswald', sans-serif;
 }

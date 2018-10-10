@@ -27,9 +27,26 @@ def signup():
             yob = form['yob'],
             email = form['email'],
             password = form['password'],
-            level = int(form['level'])
+            level = 99
         )
         new_user.save()
+        x = form['email']
+        user = User.objects.get(email = x)
+        user_id = user.user_id
+        y = "http://127.0.0.1:5000/{}".format(user_id)
+        verify_account(x,y)
+        return redirect(url_for('login'))
+
+@app.route('/verify_account/<user_id>')
+def verify_account(user_id):
+    user_id = User.objects.with_id(user_id)
+    if user_id is not None:
+        verify_user = User(
+            level = 3
+        )
+        verify_user.update()
+        return redirect(url_for('login'))
+    else:
         return redirect(url_for('login'))
 
 @app.route('/admin')
