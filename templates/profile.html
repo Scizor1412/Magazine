@@ -17,19 +17,31 @@
             </div>
             <div class="col-md-7 h-70p d-flex justify-content-center align-items-center product-border">
                     <div class="m-4">   
-                        <table></table>
-                            <h2 class="font-noto text-primary">{{ user_profile.email }}</h2>
-                            <h4 class="font-noto">Họ và tên: {{ user_profile.fullname }}</h4>
-                            <h4 class="font-noto">Năm sinh: {{ user_profile.yob }}</h4>
-                            {% if user_profile.level == 0 %}
-                            <h4 class="font-noto">Cấp thành viên: Admin</h4>
-                            {% elif user_profile.level == 1 %}
-                            <h4 class="font-noto">Cấp thành viên: Moderator</h4>
-                            {% else %}
-                            <h4 class="font-noto">Cấp thành viên: Thành viên thường</h4>
-                            {% endif %}
-                            <h4 class="font-noto">Sở thích cá nhân:</h4>
-                        </div>
+                        <table>
+                            <tr>
+                                <td>Email</td>
+                                <td>{{ user_profile.email }}</td>
+                            </tr>
+                            <tr>
+                                <td>Họ và tên</td>
+                                <td>{{ user_profile.fullname }}</td>
+                            </tr>
+                            <tr>
+                                <td>Năm sinh</td>
+                                <td>{{ user_profile.yob }}</td>
+                            </tr>
+                            <tr>
+                                <td>Cấp thành viên</td>
+                                {% if user_profile.level == 0 %}
+                                <td>Cấp thành viên: Admin</td>
+                                {% elif user_profile.level == 1 %}
+                                <td>Cấp thành viên: Moderator</td>
+                                {% else %}
+                                <td>Cấp thành viên: Thành viên thường</td>
+                                {% endif %}
+                            </tr>
+                        </table>
+                    </div>
                 <div class="mt-5">
                     <a href="{{ url_for('change_password', user_id = user_profile.id)}}"><h1>Thay đổi mật khẩu</h1></a>
                 </div>
