@@ -3,7 +3,7 @@ import mlab
 from models.db_user import User
 from models.db_article import Article, Comment
 from datetime import datetime
-from sent_mail import sent_mail
+from sent_mail import *
 from reset_pass import *
 
 app = Flask(__name__)
@@ -11,7 +11,7 @@ app = Flask(__name__)
 mlab.connect()
 
 app.secret_key = "secret key"
-1
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -31,23 +31,21 @@ def signup():
         )
         new_user.save()
         x = form['email']
-        user = User.objects.get(email = x)
-        user_id = user.user_id
-        y = "http://127.0.0.1:5000/{}".format(user_id)
-        verify_account(x,y)
-        return redirect(url_for('login'))
+        user = User.objects.get(email = x).id
+        user_id = User.objects.with_id(user)
+        if user_id is not None:
+            y = "http://127.0.0.1:5000/verify_account/{}".format(user_id['id'])
+            sent_mail_verify(x,y)
+            return redirect(url_for('login'))
+        else:
+            return redirect(url_for('login'))
 
 @app.route('/verify_account/<user_id>')
 def verify_account(user_id):
-    user_id = User.objects.with_id(user_id)
-    if user_id is not None:
-        verify_user = User(
-            level = 3
-        )
-        verify_user.update()
-        return redirect(url_for('login'))
-    else:
-        return redirect(url_for('login'))
+    User.objects.with_id(user_id).update(
+        level = 3
+    )
+    return redirect(url_for('login'))
 
 @app.route('/admin')
 def admin():
@@ -90,6 +88,9 @@ def login():
                 session['level'] = found_user.level
                 if session['level'] == 0:
                     return redirect(url_for('admin'))
+                elif session['level'] == 99:
+                    session['loggedin'] = False
+                    return redirect(url_for('homepage'))
                 else:
                     return redirect(url_for('homepage'))
             else:
@@ -110,6 +111,9 @@ def login():
             session['level'] = found_user.level
             if session['level'] == 0:
                 return redirect(url_for('admin'))
+            elif session['level'] == 99:
+                    session['loggedin'] = False
+                    return redirect(url_for('homepage'))
             else:
                 return redirect(url_for('homepage'))
         else:
@@ -147,7 +151,8 @@ def edit_user(user_id):
             edit_user.update(
                 set__fullname = form['fullname'],
                 set__yob = form['yob'],
-                set__email = form['email']
+                set__email = form['email'],
+                set__level = form['level']
             )
             return redirect(url_for('admin_user'))
     else:
@@ -232,15 +237,15 @@ def user_approval():
 
 @app.route('/user/approve/<user_id>')
 def approve_user(user_id):
-    approve_user = Request.objects.with_id(user_id)
+    approve_user = User.objects.with_id(user_id)
     if approve_user is not None:
         approve_user.update(
             set__level = 1,
             set__request = False
         )
-        return redirect(url_for('user_request'))
+        return redirect(url_for('user_approval'))
     else:
-        return redirect(url_for('user_request'))
+        return redirect(url_for('user_approval'))
 
         
 @app.route('/reject_user/<user_id>')
@@ -248,11 +253,12 @@ def reject_user(user_id):
     reject_user = User.objects.with_id(user_id)
     if reject_user is not None:
         reject_user.update(
+            set__level = 3,
             set__request = False
         )
-        return redirect(url_for('user_request'))
+        return redirect(url_for('user_approval'))
     else:
-        return redirect(url_for('user_request'))
+        return redirect(url_for('user_approval'))
 
 @app.route('/homepage', methods = ["GET", "POST"])
 def homepage():
@@ -312,6 +318,13 @@ def forgotpass():
         )
         sent_mail(email,password)
         return redirect(url_for('login'))
+
+@app.route('/moderator/<user_id>')
+def moderator(user_id):
+    User.objects.with_id(user_id).update(
+        level = 2
+    )
+    return redirect(url_for('profile'))
 
 @app.route('/logout')
 def logout():
